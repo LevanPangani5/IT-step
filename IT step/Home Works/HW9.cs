@@ -10,7 +10,7 @@ namespace IT_step.Home_Works
     {
         class Calculator
         {
-            //enm-დან დინამიურად ქმნის ოპერაციების ლისტს
+            //enum-დან დინამიურად ქმნის ოპერაციების ლისტს
             private List<char> GetMathOperations()
             {
                 OperationSymbols[] enumValues = (OperationSymbols[])Enum.GetValues(typeof(OperationSymbols));
@@ -105,6 +105,41 @@ namespace IT_step.Home_Works
                 devide = '/',
                 multiply = '*',
             }
+            /*
+             using System.ComponentModel;
+            using System.Reflection;
+
+            MathOperation operation = MathOperation.Add;
+            string operationSymbol = GetEnumDescription(operation);
+            
+            Console.WriteLine("Selected operation: " + operationSymbol); // Output: Selected operation: +
+                
+            
+                static string GetEnumDescription(Enum value)
+            {
+                var fieldInfo = value.GetType().GetField(value.ToString());
+                Console.WriteLine(fieldInfo.CustomAttributes.First().GetType().GetField("+"));
+                var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            
+                return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+            }
+            
+            public enum MathOperation
+            {
+                [Description("*")]
+                Multiply,
+            
+                [Description("-")]
+                Subtract,
+            
+                [Description("+")]
+                Add,
+            
+                [Description("/")]
+                Divide
+            }
+         */
         }
     }
 }
+            
