@@ -13,13 +13,47 @@ namespace IT_step.Home_Works
             Console.WriteLine($"{x} {action} {y}= {result}");
         }
 
+        static void add(double x, double y, DisplayDelegate del)
+        {
+            double result = x + y;
+            del(x, y, '+', result);
+
+        }
+
+        static void multiplay(double x, double y, DisplayDelegate del)
+        {
+            double result = x * y;
+            del(x, y, '*', result);
+        }
+
+        static void devide(double x, double y, DisplayDelegate del)
+        {
+            double result = x / y;
+            del(x, y, '/', result);
+        }
+
+        static void subtract(double x, double y, DisplayDelegate del)
+        {
+            double result = x - y;
+            del(x, y, '-', result);
+        }
+
+        static void power(double x, double y, DisplayDelegate del)
+        {
+            double result = Math.Pow(x, y);
+            del(x, y, '^', result);
+        }
+
         public delegate void DisplayDelegate(double x, double y, char action, double result);
 
+        public delegate void CalculatorDelegate(double x, double y, DisplayDelegate del);
+
+        //Class Work
         public class MyCalculator
         {
             public void Add(double x, double y, DisplayDelegate del)
             {
-                double result = x * y;
+                double result = x + y;
                 del(x, y, '+', result);
 
             }
