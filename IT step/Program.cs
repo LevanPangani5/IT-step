@@ -1,87 +1,49 @@
-﻿//!!!saklaso samuSaos gagrZeleba!!!
-Console.WriteLine("Home Work :");
-DisplayDelegate del = new(dispalyCalcResult);
-MyCalculator myCalc = new();
-myCalc.Add(5, 7, del);
-myCalc.Subtract(5, 7, del);
-myCalc.Multiplay(5, 7, del);
-myCalc.Devide(5, 7, del);
+﻿
+PartyOrginiser orginiser = new();
+Guest guest = new();
+guest.Subscribe(orginiser);
+orginiser.CutCake(DateTime.Now);
 
-//!!!davaleba!!!
-
-Console.WriteLine("\n\n\nHome Work :");
-
-CalculatorDelegate? calcDel = null;
-calcDel += add;
-calcDel += subtract;
-calcDel += multiplay;
-calcDel += devide;
-calcDel += power;
-calcDel(12, 7, del);
-
-
-static void dispalyCalcResult(double x, double y, char action, double result)
+public class MyEventArgs : EventArgs
 {
-    Console.WriteLine($"{x} {action} {y}= {result}");
-}
-
-static void add(double x, double y, DisplayDelegate del)
-{
-    double result = x + y;
-    del(x, y, '+', result);
-
-}
-
-static void multiplay(double x, double y, DisplayDelegate del)
-{
-    double result = x * y;
-    del(x, y, '*', result);
-}
-
-static void devide(double x, double y, DisplayDelegate del)
-{
-    double result = x / y;
-    del(x, y, '/', result);
-}
-
-static void subtract(double x, double y, DisplayDelegate del)
-{
-    double result = x - y;
-    del(x, y, '-', result);
-}
-
-static void power(double x, double y, DisplayDelegate del)
-{
-    double result = Math.Pow(x,y);
-    del(x, y, '^', result);
-}
-
-public delegate void DisplayDelegate(double x, double y, char action, double result);
-
-public delegate void CalculatorDelegate(double x, double y, DisplayDelegate del);
-
-//Class Work
-public class MyCalculator
-{
-    public void Add(double x, double y, DisplayDelegate del)
+    public string Message { get; }
+    public MyEventArgs(string message)
     {
-        double result = x + y;
-        del(x, y, '+', result);
-
+        Message = message;
     }
-    public void Subtract(double x, double y, DisplayDelegate del)
+}
+
+public class PartyOrginiser
+{
+    public event EventHandler<MyEventArgs>? CakeCutEventEvent;
+
+    protected virtual void OnCakeCutEvent(string message)
     {
-        double result = x - y;
-        del(x, y, '-', result);
+        MyEventArgs args = new MyEventArgs(message);
+        CakeCutEventEvent?.Invoke(this, args);
     }
-    public void Multiplay(double x, double y, DisplayDelegate del)
+
+    public void CutCake(DateTime date)
     {
-        double result = x * y;
-        del(x, y, '*', result);
+        OnCakeCutEvent($"Cake cutting starts at: {date}");
     }
-    public void Devide(double x, double y, DisplayDelegate del)
+}
+
+//Subscriber
+public class Guest
+{
+    private void VideoUploadEventHandler(object sender, MyEventArgs e)
     {
-        double result = x / y;
-        del(x, y, '/', result);
+        Console.WriteLine($"Alert! new notification from Party organisers:\n{e.Message}");
+    }
+
+    public void Subscribe(PartyOrginiser orginiser)
+    {
+        orginiser.CakeCutEventEvent += VideoUploadEventHandler;
+    }
+
+    public void UnSubscribe(PartyOrginiser orginiser)
+    {
+        orginiser.CakeCutEventEvent -= VideoUploadEventHandler;
     }
 }
