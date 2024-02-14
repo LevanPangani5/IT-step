@@ -9,12 +9,6 @@ namespace IT_step.Home_Works
     internal class HW7
     {
 
-
-
-
-
-
-
         interface IRefuelable
         {
             double FuelCapacity { get; set; }
